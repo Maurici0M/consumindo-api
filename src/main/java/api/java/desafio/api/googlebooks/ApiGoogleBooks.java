@@ -1,5 +1,7 @@
 package api.java.desafio.api.googlebooks;
 
+import api.java.desafio.textcolors.AnsiColors;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -14,6 +16,7 @@ public class ApiGoogleBooks {
     private String urlApi;
     private String keyApi;
     private String response;
+    private AnsiColors ansiColors;
 
     public void setBookName(String bookName) {
         this.bookName = bookName;
@@ -44,8 +47,8 @@ public class ApiGoogleBooks {
         return response;
     }
 
-    public String apiKey(){
-        this.setKeyApi("AIzaSyCP9KIAFEJconUeKpkx0uo1JjMZeHfdWeQ");
+    public String apiKey(String keyApi){
+        this.setKeyApi(keyApi);
         return getKeyApi();
     }
 
@@ -59,7 +62,7 @@ public class ApiGoogleBooks {
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(urlApi(apiKey(), getBookName()))
+                    .uri(URI.create(urlApi(apiKey(getKeyApi()), getBookName()))
                     ).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -67,7 +70,8 @@ public class ApiGoogleBooks {
             System.out.println(getResponse());
         }
         catch (RuntimeException e) {
-            throw new RuntimeException(e);
+            System.out.println(getAnsiColors().textRed("Ops, ocorreu um erro: " + e.getMessage()));
+            //throw new RuntimeException(e);
         }
     }
 
@@ -77,17 +81,37 @@ public class ApiGoogleBooks {
         return encoded;
     }
 
-    public String textYellow(String txt){
-        return "\n\u001B[33m" + txt + "\u001B[0m \n";
-    }
-
     public void msgHome() throws IOException, InterruptedException {
+        ansiColors();
         Scanner scInput = new Scanner(System.in);
-        System.out.println("\nDigite o nome do livro que deseja: ");
+        System.out.println(getAnsiColors().textMagenta("\nDigite o nome do livro que deseja: "));
         String enterNameBook = scInput.nextLine();
         setBookName(encodedQuery(enterNameBook));
-        //System.out.println(getBookName());
-        System.out.println(textYellow("Organizando os \uD83D\uDCDA..."));
+        msgAlertApiKey();
+        setKeyApi(scInput.nextLine());
+        System.out.println(getAnsiColors().textCyan("\nOrganizando os \uD83D\uDCDA...\n"));
         apiConnection();
     }
+
+    public void msgAlertApiKey(){
+        ansiColors();
+        System.out.println(
+                getAnsiColors().
+                        textBrilhante("\nPara sua requisição ser processada, será necessário adicionar a ")
+                        +
+                        getAnsiColors().textYellow("API KEY")
+                        +
+                        getAnsiColors().textBrilhante(" do GoogleBooks."));
+        System.out.println("Por favor, " + getAnsiColors().textYellow("digite a API KEY para continuar: "));
+    }
+
+    // + ANSI COLORS
+    public void ansiColors(){
+        this.ansiColors = new AnsiColors();
+    }
+
+    public AnsiColors getAnsiColors() {
+        return ansiColors;
+    }
+
 }

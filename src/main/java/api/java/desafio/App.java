@@ -10,7 +10,7 @@ public class App {
         var viaCep = new ViaCep();
         viaCep.msgHome();
 
-        //API GOOGLE BOOKS (google play livros)
+        //API GOOGLE BOOKS (Google Play Livros) - em produção
         var apiGoogle = new ApiGoogleBooks();
         //apiGoogle.msgHome();
     }

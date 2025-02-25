@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "cep": "05869-280",
+    "logradouro": "Rua Ricardo Nascimento",
+    "bairro": "Capão Redondo",
+    "localidade": "São Paulo",
+    "uf": "SP",
+    "estado": "São Paulo",
+    "regiao": "Sudeste"
+  }
+]
