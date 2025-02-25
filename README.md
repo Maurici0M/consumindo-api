@@ -28,5 +28,12 @@ Este projeto foi desenvolvido com o objetivo de servir como estudo, utilizando a
   
 </details>
 
+<details>
+  <summary> <b>Melhorias futuras e erros conhecidos: </b> </summary>
+  <br>
+    Caso seja digitado um CEP inexistente, a requisição retornará um "BadRequest 400", resultando na ativação de uma exceção e encerramento da aplicação. Este comportamento já está mapeado para tratamento. Além disso, caso seja digitado um texto em vez de um CEP, a aplicação também falhará de forma não programada. Essas situações já são conhecidas e serão tratadas em breve para que a aplicação funcione da melhor maneira possível.
+
+</details>
+
 
 
